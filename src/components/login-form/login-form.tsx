@@ -30,11 +30,11 @@ export const LoginForm: FC = () => {
           Log in
         </h2>
         <Login />
-        <p className=" font-primaryRegular text-[#828282] flex items-center ">
+        <div className=" font-primaryRegular text-[#828282] flex items-center ">
           <Spacer />
           Or
           <Spacer />
-        </p>
+        </div>
         <SocialSignIn />
         <p className="font-primaryRegular text-[#828282]">
           Have no account yet?
