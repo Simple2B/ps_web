@@ -13,19 +13,19 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as RegisterImport } from './routes/register'
 import { Route as ForgotPasswordImport } from './routes/forgot-password'
 
 // Create Virtual Routes
 
+const RegisterLazyImport = createFileRoute('/register')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-const RegisterRoute = RegisterImport.update({
+const RegisterLazyRoute = RegisterLazyImport.update({
   path: '/register',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/register.lazy').then((d) => d.Route))
 
 const ForgotPasswordRoute = ForgotPasswordImport.update({
   path: '/forgot-password',
@@ -59,7 +59,7 @@ declare module '@tanstack/react-router' {
       id: '/register'
       path: '/register'
       fullPath: '/register'
-      preLoaderRoute: typeof RegisterImport
+      preLoaderRoute: typeof RegisterLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -70,7 +70,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   ForgotPasswordRoute,
-  RegisterRoute,
+  RegisterLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -93,7 +93,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "forgot-password.tsx"
     },
     "/register": {
-      "filePath": "register.tsx"
+      "filePath": "register.lazy.tsx"
     }
   }
 }

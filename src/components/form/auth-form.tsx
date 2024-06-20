@@ -15,14 +15,13 @@ import {
 import {Input} from '@/components/ui/input';
 import {Mail} from 'lucide-react';
 import {Link} from '@tanstack/react-router';
-import {PasswordInput} from './pass-input';
+import {PasswordInput} from '../login-form/pass-input';
+import {formSchema, UserData} from '@/schemas/formSchema';
 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(4),
-});
-
-export const Login: FC = () => {
+interface FormProps {
+  action: (userData: UserData) => void;
+}
+export const AuthForm: FC<FormProps> = ({action}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,6 +33,7 @@ export const Login: FC = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    console.log(action);
   }
   return (
     <>
