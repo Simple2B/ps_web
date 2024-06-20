@@ -1,3 +1,4 @@
+import {LoginForm} from '@/components/login-form/login-form';
 import {createLazyFileRoute} from '@tanstack/react-router';
 
 export const Route = createLazyFileRoute('/')({
@@ -6,8 +7,8 @@ export const Route = createLazyFileRoute('/')({
 
 function Index() {
   return (
-    <div className="bg-[#5769D4] w-screen h-screen">
-      <h3>Welcome Home!</h3>
+    <div className="bg-[#5769D4] w-screen h-screen items-center justify-center flex">
+      <LoginForm />
     </div>
   );
 }
