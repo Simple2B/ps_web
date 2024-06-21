@@ -1,7 +1,6 @@
 services:
   api:
-    # image: atlas-api
-    #TODO: replace with real image
+    image: simple2b/project-s-api
     ports:
       - 127.0.0.1:${API_PORT:-7888}:80
     environment:

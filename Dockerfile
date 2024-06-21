@@ -1,6 +1,5 @@
 FROM node as build
 WORKDIR /app
-ARG VITE_API_BASE_URL
 COPY package*.json ./
 COPY yarn.lock ./
 RUN yarn
@@ -9,8 +8,7 @@ COPY . .
 RUN yarn build
 
 
-# FROM atlas-api as prod
-#TODO: Add the production image here
+FROM simple2b/project-s-api
 WORKDIR /home/pi
 COPY --from=build /app/dist ./static
 
