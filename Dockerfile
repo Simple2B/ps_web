@@ -9,6 +9,6 @@ RUN yarn build
 
 
 FROM simple2b/project-s-api
-WORKDIR /home/pi
-COPY --from=build /app/dist ./static
+WORKDIR /home/app
+COPY --from=build /app/dist ./ps_api/static
 
