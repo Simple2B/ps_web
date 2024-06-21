@@ -1,0 +1,27 @@
+#!/bin/bash
+
+export API_PORT=7888
+
+# goto script directory
+cd "$(dirname "$0")"
+
+# up api server
+docker compose pull
+docker compose up -d
+sleep 10
+
+# get openapi.json
+yarn
+yarn get-openapi-json http://localhost:${API_PORT}
+if [ $? -ne 0 ]; then
+    echo "Error: get openapi.json failed"
+    exit 2
+fi
+# generate api
+yarn gen-api
+if [ $? -ne 0 ]; then
+    echo "Error: generate api failed"
+    exit 3
+fi
+
+docker compose down

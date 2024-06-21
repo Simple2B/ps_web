@@ -23,6 +23,11 @@
     "paths": {
       "@/*": ["./src/*"]
     }
+    // ignore paths
+    // "paths": {
+    //   "@/*": ["./src/*"],
+    //   "test/*": ["./test/*"]
+    // }
   },
   "include": ["src"],
   "references": [{"path": "./tsconfig.node.json"}]
