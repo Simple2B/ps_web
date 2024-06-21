@@ -5,12 +5,7 @@ import {Button} from '../ui/button';
 import {Wrapper} from '../wrapper/wrapper';
 import {SocialSignIn} from '../login-form/social-signin';
 import {Spacer} from '../login-form/spacer';
-import {AuthForm} from '../form/auth-form';
-import {UserData} from '@/schemas/formSchema';
-
-function Register(userData: UserData) {
-  console.log(userData);
-}
+import {Register} from './register';
 
 export const RegistrationForm: FC = () => {
   return (
@@ -19,7 +14,7 @@ export const RegistrationForm: FC = () => {
         <h2 className="text-[#3949AB] font-primaryRegular text-[20px] mb-[64px]">
           Sign up
         </h2>
-        <AuthForm action={Register} />
+        <Register />
         <div className=" font-primaryRegular text-[#828282] flex items-center ">
           <Spacer />
           Or

@@ -14,26 +14,40 @@ import {
 } from '@/components/ui/form';
 import {Input} from '@/components/ui/input';
 import {Mail} from 'lucide-react';
-import {Link} from '@tanstack/react-router';
 import {PasswordInput} from '../login-form/pass-input';
-import {formSchema, UserData} from '@/schemas/formSchema';
+import {registerFormSchema} from '@/schemas/formSchema';
+import {useAPIRegister} from '@/api/authentication/authentication';
+import {toast} from 'sonner';
+import {useNavigate} from '@tanstack/react-router';
 
-interface FormProps {
-  action: (userData: UserData) => void;
-}
-export const AuthForm: FC<FormProps> = ({action}) => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: '',
-      password: '',
+export const Register: FC = () => {
+  const navigate = useNavigate();
+  const registrationMutate = useAPIRegister({
+    mutation: {
+      onSuccess: () => {
+        toast.success('Registration successful');
+        navigate({to: '/'});
+      },
+      onError: error => {
+        console.log('Error while trying to register', error);
+        toast.error('Failed to register user');
+      },
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  const form = useForm<z.infer<typeof registerFormSchema>>({
+    resolver: zodResolver(registerFormSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
+  function onSubmit(values: z.infer<typeof registerFormSchema>) {
+    values.username = values.email;
+    registrationMutate.mutate({data: values});
     console.log(values);
-    console.log(action);
+    form.reset();
   }
   return (
     <>
@@ -74,17 +88,28 @@ export const AuthForm: FC<FormProps> = ({action}) => {
               </FormItem>
             )}
           />
-          <div className="text-right">
-            <Link
-              to="/forgot-password"
-              className="w-full text-[#3949AB] font-primaryRegular">
-              Forgot password?
-            </Link>
-          </div>
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({field}) => (
+              <FormItem className="mt-4 mb-2">
+                <FormControl>
+                  <div className="relative">
+                    <PasswordInput
+                      placeholder="Confirm Password"
+                      {...field}
+                      className="pl-14"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button
             type="submit"
             className="w-full bg-[#9ba4d5] rounded-full font-primaryRegular text-white text-[14px] hover:bg-slate-400 mt-6">
-            Log in
+            Sign Up
           </Button>
         </form>
       </Form>

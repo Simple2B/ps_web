@@ -4,12 +4,7 @@ import {Spacer} from './spacer';
 import {SocialSignIn} from './social-signin';
 import {Button} from '../ui/button';
 import {Wrapper} from '../wrapper/wrapper';
-import {AuthForm} from '../form/auth-form';
-import {UserData} from '@/schemas/formSchema';
-
-function Login(userData: UserData) {
-  console.log(userData);
-}
+import {Login} from './login';
 
 export const LoginForm: FC = () => {
   return (
@@ -18,7 +13,7 @@ export const LoginForm: FC = () => {
         <h2 className="text-[#3949AB] font-primaryRegular text-[20px] mb-[64px]">
           Log in
         </h2>
-        <AuthForm action={Login} />
+        <Login />
         <div className=" font-primaryRegular text-[#828282] flex items-center ">
           <Spacer />
           Or
