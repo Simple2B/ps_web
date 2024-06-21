@@ -5,7 +5,7 @@
  * OpenAPI spec version: 1.0.4
  */
 
-export interface User {
-  email: string;
+export interface UserLogin {
+  password: string;
   username: string;
 }
