@@ -38,12 +38,14 @@ fi
 
 docker compose down
 
-# version patch
-yarn version-patch
+npm version $1
+
 if [ $? -ne 0 ]; then
     echo "Error: patch version failed"
     exit 1
 fi
+
+git push --follow-tags
 
 # get current package version from package.json using node
 VERSION=$(node -p "require('./package.json').version")
