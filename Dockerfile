@@ -10,5 +10,5 @@ RUN yarn build
 
 FROM simple2b/project-s-api
 WORKDIR /home/app
-COPY --from=build /app/dist ./static
+COPY --from=build /app/dist ./ps_api/static
 
