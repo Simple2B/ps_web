@@ -5,7 +5,6 @@
  * OpenAPI spec version: 1.0.6
  */
 
-export interface User {
-  email: string;
-  username: string;
+export interface Greeting {
+  message: string;
 }

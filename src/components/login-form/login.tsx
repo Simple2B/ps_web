@@ -20,12 +20,14 @@ import {loginFormSchema} from '@/schemas/formSchema';
 import {toast} from 'sonner';
 import {useAPIToken} from '@/api/authentication/authentication';
 import {UserLogin} from '@/api/model/userLogin';
+import {storeToken} from '@/utils/localStorage';
 
 export const Login: FC = () => {
   const navigate = useNavigate();
   const loginMutate = useAPIToken({
     mutation: {
-      onSuccess: () => {
+      onSuccess: data => {
+        storeToken(data.data.access_token);
         toast.success('Login successful');
         navigate({to: '/home'});
       },
