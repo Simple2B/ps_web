@@ -8,7 +8,7 @@ interface BackgroundWrapperProps {
 export const BackgroundWrapper: FC<BackgroundWrapperProps> = ({children}) => {
   return (
     <div className="bg-[#5769D4] w-screen h-screen items-center justify-center flex relative">
-      <p className="absolute text-white top-2 left-2">v{pj.version}</p>
+      <p className="absolute text-white top-2 left-2 text-sm">v{pj.version}</p>
       {children}
     </div>
   );
