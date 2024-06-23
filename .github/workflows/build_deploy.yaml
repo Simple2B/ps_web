@@ -9,6 +9,7 @@ env:
   DOCKER_LOGIN: simple2b
   IMAGE_NAME: simple2b/project-s-web
   DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  PUBLISH_PROFILE: ${{ secrets.AzureAppService_PublishProfile_89bd25c0cad94b4c9e40c9cf6e93bc17 }}
 
 jobs:
   on-develop-branch-check:
@@ -62,3 +63,20 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'project-s'
+          slot-name: 'production'
+          publish-profile: ${{ env.PUBLISH_PROFILE }}
+          images: ${{ env.IMAGE_NAME }}:latest
