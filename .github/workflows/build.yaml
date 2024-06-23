@@ -27,7 +27,7 @@ jobs:
 
   build:
     name: Build and Push
-    runs-on: Linux
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
