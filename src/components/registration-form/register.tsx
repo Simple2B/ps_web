@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import {Input} from '@/components/ui/input';
-import {Mail} from 'lucide-react';
+import {Mail, User} from 'lucide-react';
 import {PasswordInput} from '../login-form/pass-input';
 import {registerFormSchema} from '@/schemas/formSchema';
 import {useAPIRegister} from '@/api/authentication/authentication';
@@ -44,15 +44,34 @@ export const Register: FC = () => {
     },
   });
   function onSubmit(values: z.infer<typeof registerFormSchema>) {
-    values.username = values.email;
     registrationMutate.mutate({data: values});
-    console.log(values);
     form.reset();
   }
   return (
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({field}) => (
+              <FormItem className="my-4">
+                <FormControl>
+                  <div className="relative">
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                      <User color="#828282" />
+                    </div>
+                    <Input
+                      placeholder="Username"
+                      {...field}
+                      className="pl-14"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="email"
