@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Deploy Azure Web App
+
+RESOURCE_GROUP_NAME=cloud-shell-storage-northeurope
+
+RESOURCE_ID=$(az group show \
+  --resource-group $RESOURCE_GROUP_NAME \
+  --query id \
+  --output tsv)
+echo ResoutceID: $RESOURCE_ID
+
+APP_SERVICE_PLAN_NAME=ASP-cloudshellstoragenortheurope-bf1d
+APP_SERVICE_NAME=project-s
+
+CONTAINER_NAME=simple2b/project-s-web:latest
+
+az webapp create \
+  --resource-group $RESOURCE_GROUP_NAME \
+  --plan $APP_SERVICE_PLAN_NAME \
+  --name $APP_SERVICE_NAME \
+  --assign-identity '[system]' \
+  --scope $RESOURCE_ID \
+  --deployment-container-image-name $CONTAINER_NAME
